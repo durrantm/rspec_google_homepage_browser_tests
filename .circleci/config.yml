@@ -11,7 +11,7 @@ jobs: # a collection of steps
           PGHOST: 127.0.0.1
           PGUSER: circleci-demo-ruby
           RAILS_ENV: test
-    steps: # a collection of executable commands
+    steps:
       - checkout # special step to check out source code to working directory
 
       - run: # Install Ruby dependencies
@@ -19,11 +19,11 @@ jobs: # a collection of steps
           #command: bundle check || bundle install
           command: gem update --system && gem install bundler && bundle install
 
-#      - save_cache:
-#          key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
-#          paths:
-#            - vendor/bundle
-#
+      - save_cache:
+          key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
 #      # Only necessary if app uses webpacker or yarn in some other way
 #      - restore_cache:
 #          keys:

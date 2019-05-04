@@ -35,10 +35,10 @@ jobs: # a collection of steps
 #          command: yarn install --cache-folder ~/.cache/yarn
 
       # Store yarn / webpacker cache
-      #- save_cache:
-      #    key: rails-demo-yarn-{{ checksum "yarn.lock" }}
-      #    paths:
-      #      - ~/.cache/yarn
+      - save_cache:
+          key: rails-demo-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 
       #- run:
       #    name: Wait for DB

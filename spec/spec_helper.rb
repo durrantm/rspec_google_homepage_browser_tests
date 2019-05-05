@@ -1,7 +1,10 @@
 require 'rspec'
 require 'capybara'
 require 'capybara/rspec'
-require 'webdrivers'
+#require 'webdrivers'
+require 'selenium-webdriver'
+#require 'chromedriver-helper'
+#require 'geckodriver-helper'
 
 Capybara.configure do |config|
   config.run_server = false

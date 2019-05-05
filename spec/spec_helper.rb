@@ -1,10 +1,13 @@
 require 'rspec'
 require 'capybara'
 require 'capybara/rspec'
-#require 'webdrivers'
 require 'selenium-webdriver'
-#require 'chromedriver-helper'
-#require 'geckodriver-helper'
+
+Dir.glob(File.expand_path("../../*_spec.rb", __FILE__)).each do |file|
+  require file
+end
+
+Capybara.default_max_wait_time = 2
 
 Capybara.configure do |config|
   config.run_server = false
@@ -18,6 +21,15 @@ end
 
 Capybara.register_driver :firefox do |app|
   Capybara::Selenium::Driver.new(app, browser: :firefox)
+end
+
+RSpec.configure do |config|
+  config.after do |example|
+    if ENV['UW_SCREENSHOTS'] == 'true'
+      screenshot(example, page) if defined? page
+    end
+  end
+  config.order = :random
 end
 
 if ENV['TEST_IE'] == 'true'
@@ -53,7 +65,6 @@ if ENV['TEST_IE'] == 'true'
     #    bs_local_args = {"key" => "#{CONFIG['key']}"}
     #    @bs_local.start(bs_local_args)
     #  end
-
     Capybara::Selenium::Driver.new(
       app,
       browser: :remote,
@@ -61,18 +72,6 @@ if ENV['TEST_IE'] == 'true'
       desired_capabilities: @caps
     )
   end
-end
-
-Capybara.default_max_wait_time = 2
-Capybara.default_driver = :chrome
-
-RSpec.configure do |config|
-  config.after do |example|
-    if ENV['UW_SCREENSHOTS'] == 'true'
-      screenshot(example, page) if defined? page
-    end
-  end
-  config.order = :random
 end
 
 def screenshot(example, page)

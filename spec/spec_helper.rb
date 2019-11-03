@@ -1,7 +1,8 @@
 require 'rspec'
 require 'capybara'
 require 'capybara/rspec'
-require 'selenium-webdriver'
+#require 'selenium-webdriver'
+require 'webdrivers'
 
 Dir.glob(File.expand_path("../../*_spec.rb", __FILE__)).each do |file|
   require file
